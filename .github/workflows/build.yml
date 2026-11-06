@@ -42,6 +42,10 @@ jobs:
           mkdir -p project
           unzip -q NextorCord-Android-Project.zip -d project
 
+      - name: Fix project file permissions
+        run: |
+          chmod -R u+rwX "$GITHUB_WORKSPACE/project"
+
       - name: Locate Android project
         run: |
           SETTINGS_FILE=$(find "$GITHUB_WORKSPACE/project" \
@@ -50,7 +54,7 @@ jobs:
 
           if [ -z "$SETTINGS_FILE" ]; then
             echo "ERROR: Gradle settings file not found!"
-            find project -maxdepth 5 -type f
+            find project -maxdepth 6 -type f
             exit 1
           fi
 
